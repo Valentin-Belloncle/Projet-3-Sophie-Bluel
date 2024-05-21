@@ -35,12 +35,24 @@ export function genererFiltres(categories){
 	}
 }
 
-const boutonFiltrer = document.querySelector("button");
+// Filtrage des projets
+export function filtreProjets(projets){
+	const boutonsFiltrer = document.querySelectorAll(".categories button");
 
-boutonFiltrer.addEventListener("click", function () {
-	const piecesFiltrees = pieces.filter(function (piece) {
-		return piece.prix <= 35;
-	});
-	document.querySelector(".fiches").innerHTML = "";
-	genererPieces(piecesFiltrees);
-});
+	for (let i = 0; i < boutonsFiltrer.length; i++) {
+		boutonsFiltrer[i].addEventListener("click", function (event) {
+			const id = event.target.id;
+			const projetsFiltrees = projets.filter(function (projets) {
+				return projets.category.id == id;
+			});
+			//On efface le code HTML pour pouvoir afficher les modifications par la suite
+			document.querySelector(".gallery").innerHTML = "";
+			// Moddification de la galerie selon le bouton
+			if (id == "tous") {
+				genererProjets(projets);
+			} else {
+				genererProjets(projetsFiltrees);
+			}
+		});
+	};
+};
