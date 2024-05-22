@@ -52,7 +52,14 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #fffffa;
 }
+
+a {
+	text-decoration: none;
+	color: #3D3D3D;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -67,7 +74,7 @@ h1 {
 	flex-direction: column;
 	font-family: 'Syne';
 	font-size: 22px;
-	font-weight: 800;
+	font-weight: 900;
 	color: #B1663C
 }
 
@@ -88,6 +95,7 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 25px;
 
 }
 nav li {
@@ -138,7 +146,7 @@ li:hover {
 	width: fit-content;
 }
 
-.categories button {
+.categories button, #loginForm button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -155,7 +163,7 @@ li:hover {
 	cursor: pointer;
 }
 
-#tous {
+#tous, #loginForm button {
 	background-color: #1D6154;
 	color: white;
 }
@@ -218,6 +226,46 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+/*Page login*/
+
+#loginSection, #loginForm{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap : 40px;
+}
+
+#loginSection {
+	margin-top: 175px;
+}
+
+#loginForm {
+	color: #3D3D3D;
+	font-weight: bold;
+	margin-bottom: 300px;
+}
+
+#loginForm p {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+#loginForm input {
+	width: 372px;
+	height: 46px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: 0;
+}
+
+#loginForm button {
+	font-size: 14px;
+	padding: 5px 40px;
+}
+
+#loginForm a {
+	text-decoration: underline;
+}
