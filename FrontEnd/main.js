@@ -1,8 +1,8 @@
-import { getProjets, getCategories } from "./service.js";
-import { genererProjets, genererFiltres, filtreProjets } from "./script.js";
+import { getProjects, getCategories } from "./service.js";
+import { generateProjects, generateFilters, filterProjects } from "./script.js";
 
-const projetsApi = await getProjets();
-genererProjets(projetsApi);
+const projectsApi = await getProjects();
+generateProjects(projectsApi);
 const categoriesApi = await getCategories();
-genererFiltres(categoriesApi);
-filtreProjets(projetsApi);
+generateFilters(categoriesApi);
+filterProjects(projectsApi);

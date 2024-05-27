@@ -1,5 +1,5 @@
 // Récupération des projets depuis l'API
-export async function getProjets() {
+export async function getProjects() {
 	const reponse = await fetch("http://localhost:5678/api/works");
 	const projetsApi = await reponse.json();
 	return projetsApi;
@@ -12,25 +12,18 @@ export async function getCategories() {
 	return categoriesApi;
 }
 
-// Envoie des informations du login à l'API
-export async function postLogin () {
-	document.getElementById("loginForm").addEventListener("submit", async function(event) {
-		event.preventDefault();
-		const username = document.getElementById("username").value;
-		const password = document.getElementById("password").value;
-		const truc = {
-			"email": username, 
-			"password": password
-		};
-		const login = JSON.stringify(truc);
-		console.log(username, password);
-		const  Response = await fetch("http://localhost:5678/api/users/login", {
-			method: "POST",
-			headers: { "Content-Type": "application/json", 
-				"Accept": "*/*"
-			},
-			body: login
-		});
-		console.log(Response.json());
+// Envoie des informations du login et reception de laà l'API
+export async function postLogin (username, password) {
+
+	const loginData = JSON.stringify({
+		"email": username, 
+		"password": password
 	});
+
+	const  response = await fetch("http://localhost:5678/api/users/login", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: loginData
+	});
+	return response;
 };
