@@ -7,8 +7,8 @@ export async function getProjects() {
 
 // Récupération des catégories depuis l'API
 export async function getCategories() {
-	const reponse = await fetch("http://localhost:5678/api/categories");
-	const categoriesApi = await reponse.json();
+	const response = await fetch("http://localhost:5678/api/categories");
+	const categoriesApi = await response.json();
 	return categoriesApi;
 }
 
