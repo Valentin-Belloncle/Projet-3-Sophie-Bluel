@@ -13,18 +13,25 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="main.js" defer></script>
+	<script type="module" src="modale/modal.js" defer></script>
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li><a href="./login/login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram" width="20px"></li>
-		</ul>
-	</nav>
+	<div class="editorStrip">
+		<i class="fa-regular fa-pen-to-square"></i>
+		Mode édition
+	</div>
+	<div class="navStrip">
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li>projets</li>
+				<li>contact</li>
+				<li><a href="./login/login.html">login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram" width="20px"></li>
+			</ul>
+		</nav>
+	</div>
 </header>
 <main>
 	<section id="introduction">
@@ -39,7 +46,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="portfolioTitle">
+			<h2>Mes Projets</h2>
+			<div class="editorButton">
+				<i class="fa-regular fa-pen-to-square"></i>
+				modifier
+			</div>
+		</div>
 		<div class="categories">
 			<button id="allElements">Tous</button>
 		</div>
@@ -63,41 +76,8 @@
 	<div class="modal">
 		<div class="closeModal">x</div>
 		<h2>Galerie photo</h2>
-		<div class="gallery">			<figure>
-			<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-			<div class="iconDiv">
-			<i class="fa-solid fa-trash-can"></i></div></figure>
-		<figure>
-			<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-			<div class="iconDiv">
-				<i class="fa-solid fa-trash-can"></i></div></figure>
-		<figure>
-			<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-		</figure>
-		<figure>
-			<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-		</figure>
-		<figure>
-			<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-		</figure>
-		<figure>
-			<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-		</figure>
-		<figure>
-			<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-		</figure>
-		<figure>
-			<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-		</figure>
-		<figure>
-			<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-		</figure>
-		<figure>
-			<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-		</figure>
-		<figure>
-			<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-		</figure></div>
+		<div class="gallery">			
+		</div>
 		<button class="addP">Ajouter une photo</button>
 
 	</div>

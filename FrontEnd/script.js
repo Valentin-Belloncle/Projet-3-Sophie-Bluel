@@ -59,11 +59,16 @@ export function filterProjects(projects){
 	};
 };
 
+
+//_______________________ LOGIN __________________________//
+
 // Stockage de l'userID et token dans le local storage
 async function saveToken(response) {
 	response.json().then( (responseToken) => {
 		localStorage.setItem("userId", parseInt(responseToken.userId));
 		localStorage.setItem("token", responseToken.token);
+		// Création d'une clé qui permettra de savoir si l'utilisateur est connecté
+		localStorage.setItem("connected", true);
 	});
 };
 
@@ -110,3 +115,55 @@ export function setEventLogin() {
 		processLoginResponseCode(responseApi);
 	});
 };
+
+// Affichage du mode editeur si connecté
+export function setEditorMod(connected) {
+	if (connected === "true") {
+		document.querySelector(".editorStrip").style.display = "flex";
+		document.querySelector(".editorButton").style.display = "flex";
+	} else {
+		document.querySelector(".editorStrip").style.display = "none";
+		document.querySelector(".editorButton").style.display = "none";
+	}
+}
+
+//____________________________MODAL____________________________//
+
+// Ajout de la galerie de la modale dans HTML 
+export function generateModalProjects(projects){
+	// Récupération de l'élément du DOM qui accueillera les fiches
+	const sectionCards = document.querySelector(".modal .gallery");
+
+	for (let i = 0; i < projects.length; i++) {
+		const article = projects[i];
+		// Création d’une balise dédiée à un projet
+		const pieceElement = document.createElement("figure");
+		// Création des balises 
+		const imageElement = document.createElement("img");
+		imageElement.src = article.imageUrl;
+		imageElement.alt = article.title;
+		const divElement = document.createElement("div");
+		divElement.className = "iconDiv";
+		const iconeElement = document.createElement("i");
+		iconeElement.className = "fa-solid fa-trash-can";
+		// On rattache la balise article a la section Fiches
+		sectionCards.appendChild(pieceElement);
+		pieceElement.appendChild(imageElement);
+		pieceElement.appendChild(divElement);
+		divElement.appendChild(iconeElement);
+	}
+}
+
+// Ouverture/fermeture de la modale
+export function openModal() {
+	document.querySelector(".editorButton").addEventListener("click", () => {
+		const overlay = document.querySelector(".overlay");
+		overlay.style.display = "block";
+		const modal = document.querySelector(".modal");
+		modal.style.display = "flex";
+		document.querySelector(".closeModal").addEventListener("click", () => {
+			modal.style.display = "none";
+			overlay.style.display = "none";
+		});
+	});
+}
