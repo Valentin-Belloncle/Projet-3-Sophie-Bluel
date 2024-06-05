@@ -72,15 +72,39 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
+	<!-- MODAL -->
 	<div class="overlay"></div>
-	<div class="modal">
-		<div class="closeModal">x</div>
-		<h2>Galerie photo</h2>
-		<div class="gallery">			
+		<div class="modal">
+			<i id="backModal" class="fa-solid fa-arrow-left"></i>
+			<i id="closeModal" class="fa-solid fa-xmark"></i>
+			<div class="modal1">
+				<h2>Galerie photo</h2>
+				<div class="gallery">			
+				</div>
+				<button class="addPhoto">Ajouter une photo</button>
+			</div>
+		<div class="modal2">
+			<h2>Ajout photo</h2>
+			<form action="#" method="post">
+				<div class="addPhotoArea">
+					<i class="fa-regular fa-image fa-xl"></i>
+					<button>
+						<input type="file">
+						<p>+ Ajouter photo</p>
+					</button>
+					<p class="infoAddPhoto">jpg. png : 4mo max</p>
+				</div>
+				<label for="title">Titre</label>
+				<input type="text" name="title" id="title">
+				<label for="category">Catégorie</label>
+				<select name="category" id="category" appearance:"none">
+					<option value="1">Hôtel</option>
+				</select>
+			</form>
+			<button disabled>Valider</button>	
 		</div>
-		<button class="addP">Ajouter une photo</button>
-
 	</div>
+
 </main>
 
 <footer>
