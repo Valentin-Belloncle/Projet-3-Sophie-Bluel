@@ -1,9 +1,9 @@
 import { getProjects } from "../service.js";
-import { generateModalProjects, openModal } from "../script.js";
+import { generateModalProjects, processModal } from "../script.js";
 
 
 const projectsApi = await getProjects();
 generateModalProjects (projectsApi);
-openModal();
+processModal();
 
 

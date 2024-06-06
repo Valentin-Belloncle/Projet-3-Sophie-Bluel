@@ -396,7 +396,7 @@ footer nav ul {
 }
 
 .modal2 {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: center;
 	gap: 40px;

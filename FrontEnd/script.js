@@ -155,25 +155,28 @@ export function generateModalProjects(projects){
 }
 
 // Ouverture/fermeture de la modale
-export function openModal() {
+export function processModal() {
+	const overlay = document.querySelector(".overlay");
+	const modal = document.querySelector(".modal");
+	const modal1 = document.querySelector(".modal1");
+	const modal2 = document.querySelector(".modal2");
+	const backModal = document.querySelector("#backModal");
+	// Ouverture modale
 	document.querySelector(".editorButton").addEventListener("click", () => {
-		const overlay = document.querySelector(".overlay");
 		overlay.style.display = "block";
-		const modal = document.querySelector(".modal");
 		modal.style.display = "flex";
-		const modal1 = document.querySelector(".modal1");
-		const modal2 = document.querySelector(".modal2");
-		const backModal = document.querySelector("#backModal");
-		
+		// Fermeture modale
 		document.querySelector("#closeModal").addEventListener("click", () => {
 			modal.style.display = "none";
 			overlay.style.display = "none";
 		});
+		// Passage à la seconde page de modale
 		document.querySelector(".addPhoto").addEventListener("click", () => {
 			modal1.style.display = "none";
 			modal2.style.display = "flex";
 			backModal.style.display = "inline";
 		});
+		// Retour à la première page
 		document.querySelector("#backModal").addEventListener("click", () => {
 			modal1.style.display = "flex";
 			modal2.style.display = "none";
