@@ -52,22 +52,39 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #fffffa;
 }
-header {
+
+a {
+	text-decoration: none;
+	color: #3D3D3D;
+}
+
+.editorStrip {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	height: 59px;
+	background-color: black;
+	color: white;
+}
+
+.navStrip {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
 	margin: 50px 0
 }
 
-h1{
+h1 {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
 	font-size: 22px;
-	font-weight: 800;
+	font-weight: 900;
 	color: #B1663C
 }
 
@@ -88,6 +105,7 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 25px;
 
 }
 nav li {
@@ -121,10 +139,64 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+#portfolio {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap : 50px
+}
+
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
+.categories {
+	display: flex;
+	gap: 10px;
+	width: fit-content;
+}
+
+button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 37px;
+	border-radius: 60px;
+	background-color: white;
+	border: 1px #1D6154 solid;
+	color: #1D6154;
+	font-family: 'Syne';
+	font-weight: bold;
+	font-size: 16px;
+	padding: 0px 10px;
+	min-width: 100px;
+	cursor: pointer;
+}
+
+button:focus {
+	background-color: #1D6154;
+	color: white;
+}
+
+#tous, #loginForm button {
+	background-color: #1D6154;
+	color: white;
+}
+
+.portfolioTitle {
+	display: flex;
+	align-items: center;
+}
+
+.editorButton {
+	display: none;
+	justify-content: space-between;
+	margin-left: 20px;
+	width: 84px;
+	height: 18px;
+	cursor: pointer;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -139,7 +211,7 @@ li:hover {
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -183,6 +255,232 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
+}
+
+/*Page login*/
+
+#loginSection, #loginForm{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap : 40px;
+}
+
+#loginSection {
+	margin-top: 175px;
+}
+
+#loginForm {
+	color: #3D3D3D;
+	font-weight: bold;
+	margin-bottom: 300px;
+}
+
+#loginForm p {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+#loginForm input {
+	width: 372px;
+	height: 46px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: 0;
+}
+
+#loginForm button {
+	font-size: 14px;
+	padding: 5px 40px;
+}
+
+#loginForm a {
+	text-decoration: underline;
+}
+
+/*Modale*/
+
+.overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+	display: none;
+	position: absolute;
+	justify-content: center;
+	top: 58%;
+	left: 33%;
+	width: 430px;
+	height: 638px;
+	background-color: white;
+	border-radius: 10px;
+	padding : 25px 100px;
+	
+}
+
+.modal1  {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 40px;
+}
+
+#closeModal {
+	position: absolute;
+	top : 20px;
+	right: 30px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#backModal {
+	display : none;
+	position: absolute;
+	top: 24px;
+	left: 28px;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+.modal h2 {
+	font-family: 'work sans';
+	font-weight: unset;
+	color: black;
+	font-size: 26px;
+	margin-top: 30px;
+}
+
+.modal1 .gallery {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 8px;
+	grid-row-gap: 30px;
+	border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+	padding-bottom: 60px;
+}
+
+.modal1 figure {
+	position: relative;
+}
+
+.modal1 .iconDiv {
+	position: absolute;
+	top : 4px;
+	right: 4px;
+	padding: 2px 4px;
+ 	color: white;
+	background-color: black;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.modal1 i {
+	font-size: 11px;
+}
+
+.modal button {
+	padding: 8px 40px;
+	background-color: #1D6154;
+	color: white;
+	margin-bottom: 25px;
+	font-size: 14px;
+}
+
+.modal2 {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	gap: 40px;
+}
+
+.modal2 button[disabled] {
+	border: hidden;
+	background-color: #A7A7A7;
+	color: white;
+	cursor: not-allowed;
+	width: 237px;
+}
+
+.modal2 button:not(:disabled) {
+	width: 237px;
+}
+
+.addPhotoArea {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	background-color: #E8F1F6;
+	height: 169px;
+}
+
+.addPhotoArea i {
+	color : #B9C5CC;
+	font-size: 70px;
+	margin-top: 45px;
+}
+
+.addPhotoArea button {
+	position: relative;
+	background-color: #CBD6DC;
+	color: #306685;
+	width: 173px;
+	z-index: 0;
+	border: hidden;
+	margin-top: 25px;
+	margin-bottom: 0;
+}
+
+.addPhotoArea button p {
+	position: absolute;
+	z-index: 0;
+	font-size: 14px;
+	margin-top: 0;
+}
+
+.addPhotoArea input {
+	position: absolute;
+	z-index: 1;
+	opacity: 0;
+}
+
+.addPhotoArea .infoAddPhoto {
+	font-size: 10px;
+	color: #444444;
+}
+
+.modal2 form {
+	display: flex;
+	flex-direction: column;
+	width: 420px;
+	font-family: 'work sans';
+	border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+	padding-bottom: 50px;
+}
+
+.modal2 form label {
+	color : #3D3D3D;
+	margin-top: 30px;
+}
+
+.modal2 form input, select {
+	color : #444444;
+	font-family: 'work sans';
+	background-color: #FFFFFF;
+	border: hidden;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	height: 51px;
+	margin-top: 10px;
+	padding: 0 15px;
 }
 
