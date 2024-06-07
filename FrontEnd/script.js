@@ -1,4 +1,4 @@
-import { postLogin } from "./service.js";
+import { postLogin, deleteProjectApi } from "./service.js";
 
 // Ajout de la galerie de projet dans HTML 
 export function generateProjects(projects){
@@ -127,7 +127,7 @@ export function setEditorMod(connected) {
 	}
 }
 
-//____________________________MODAL____________________________//
+//____________________________MODALE____________________________//
 
 // Ajout de la galerie de la modale dans HTML 
 export function generateModalProjects(projects){
@@ -142,11 +142,13 @@ export function generateModalProjects(projects){
 		const imageElement = document.createElement("img");
 		imageElement.src = article.imageUrl;
 		imageElement.alt = article.title;
+		imageElement.id = article.id;
+		// Création des div ayant pour rôle de "bouton" de suppression
 		const divElement = document.createElement("div");
 		divElement.className = "iconDiv";
 		const iconeElement = document.createElement("i");
 		iconeElement.className = "fa-solid fa-trash-can";
-		// On rattache la balise article a la section Fiches
+		// On rattache la balise article à la section Fiches
 		sectionCards.appendChild(pieceElement);
 		pieceElement.appendChild(imageElement);
 		pieceElement.appendChild(divElement);
@@ -181,6 +183,44 @@ export function processModal() {
 			modal1.style.display = "flex";
 			modal2.style.display = "none";
 			backModal.style.display = "none";
+		});
+	});
+}
+
+// Gestion de la réponse de l'API après délétion
+function processDeleteResponseCode(response){
+	switch(response.status) {
+	case 204:
+		// Affichage de la confirmation de supression dans la console 
+		alert("Supression du projet réussie");
+		break;
+	case 401:
+		alert("Utilisateur non autorisé");
+		// Afficher un message d'erreur à l'utilisateur
+		break;
+	case 500:
+		alert("Erreur du serveur, réessayez plus tard");
+		// Informer l'utilisateur qu'il y a eu une erreur serveur
+		break;
+	default:
+		// Autres erreurs
+		console.error("Erreur inattendue");
+		// Informer l'utilisateur d'une erreur inconnue
+	};
+};
+
+// Supression d'un projet sélectionné par l'utilisateur
+export function deleteProject() {
+	// Sélection de tous les "boutons" de supression de la la galerie de la modale
+	const figureGallery = document.querySelectorAll(".modal1 figure");
+	// Ajout un écouteur d'événements à chaque bouton
+	figureGallery.forEach((figure) => {
+		const idProject = figure.querySelector("img").id;
+		const binButton = figure.querySelector(".iconDiv");
+		binButton.addEventListener("click", async function() {
+			const responseApi = await deleteProjectApi(idProject);
+			// Gestion réponse API
+			processDeleteResponseCode(responseApi);
 		});
 	});
 }
