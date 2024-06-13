@@ -87,21 +87,24 @@
 			<h2>Ajout photo</h2>
 			<form action="#" method="post">
 				<div class="addPhotoArea">
-					<i class="fa-regular fa-image fa-xl"></i>
-					<button>
-						<input type="file">
-						<p>+ Ajouter photo</p>
-					</button>
-					<p class="infoAddPhoto">jpg. png : 4mo max</p>
+					<img src="" id="imagePreview">
+					<div>
+						<i class="fa-regular fa-image fa-xl"></i>
+						<button>
+							<input class="inputFile" type="file" required>
+							<p>+ Ajouter photo</p>
+						</button>
+						<p class="infoAddPhoto">jpg. png : 4mo max</p>
+					</div>
 				</div>
 				<label for="title">Titre</label>
-				<input type="text" name="title" id="title">
+				<input type="text" name="title" id="title" required>
 				<label for="category">Catégorie</label>
-				<select name="category" id="category" appearance:"none">
-					<option value="1">Hôtel</option>
+				<select name="category" id="category" required>
+					<option disabled selected value></option>
 				</select>
 			</form>
-			<button disabled>Valider</button>	
+			<button id="submitButton" disabled>Valider</button>	
 		</div>
 	</div>
 

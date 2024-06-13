@@ -1,4 +1,4 @@
-import { postLogin } from "./service.js";
+import { postLogin, deleteProjectApi, postPhoto } from "./service.js";
 
 // Ajout de la galerie de projet dans HTML 
 export function generateProjects(projects){
@@ -127,7 +127,7 @@ export function setEditorMod(connected) {
 	}
 }
 
-//____________________________MODAL____________________________//
+//____________________________MODALE____________________________//
 
 // Ajout de la galerie de la modale dans HTML 
 export function generateModalProjects(projects){
@@ -142,11 +142,13 @@ export function generateModalProjects(projects){
 		const imageElement = document.createElement("img");
 		imageElement.src = article.imageUrl;
 		imageElement.alt = article.title;
+		imageElement.id = article.id;
+		// Création des div ayant pour rôle de "bouton" de suppression
 		const divElement = document.createElement("div");
 		divElement.className = "iconDiv";
 		const iconeElement = document.createElement("i");
 		iconeElement.className = "fa-solid fa-trash-can";
-		// On rattache la balise article a la section Fiches
+		// On rattache la balise article à la section Fiches
 		sectionCards.appendChild(pieceElement);
 		pieceElement.appendChild(imageElement);
 		pieceElement.appendChild(divElement);
@@ -182,5 +184,129 @@ export function processModal() {
 			modal2.style.display = "none";
 			backModal.style.display = "none";
 		});
+	});
+}
+
+// Gestion de la réponse de l'API après délétion
+function processDeleteResponseCode(response){
+	switch(response.status) {
+	case 204:
+		// Affichage de la confirmation de supression dans la console 
+		alert("Supression du projet réussie");
+		break;
+	case 401:
+		alert("Utilisateur non autorisé");
+		// Afficher un message d'erreur à l'utilisateur
+		break;
+	case 500:
+		alert("Erreur du serveur, réessayez plus tard");
+		// Informer l'utilisateur qu'il y a eu une erreur serveur
+		break;
+	default:
+		// Autres erreurs
+		console.error("Erreur inattendue");
+		// Informer l'utilisateur d'une erreur inconnue
+	};
+};
+
+// Supression d'un projet sélectionné par l'utilisateur
+export function deleteProject() {
+	// Sélection de tous les "boutons" de supression de la la galerie de la modale
+	const figureGallery = document.querySelectorAll(".modal1 figure");
+	// Ajout un écouteur d'événements à chaque bouton
+	figureGallery.forEach((figure) => {
+		const idProject = figure.querySelector("img").id;
+		const binButton = figure.querySelector(".iconDiv");
+		binButton.addEventListener("click", async function() {
+			const responseApi = await deleteProjectApi(idProject);
+			// Gestion réponse API
+			processDeleteResponseCode(responseApi);
+		});
+	});
+}
+
+export function setControlButton() {
+	const requiredFields = document.querySelectorAll("[required]");
+	const submitButton = document.getElementById("submitButton");
+	requiredFields.forEach((field) => {
+		field.addEventListener("input", () => {
+			let isValid = true;	
+			requiredFields.forEach((f) => {
+				if (!f.value) {
+					isValid = false;
+				}
+			});
+			submitButton.disabled = !isValid ;
+		});
+	});
+}
+
+export function setPreviewImage() {
+	document.querySelector(".inputFile").addEventListener("input", (event) => {
+		const file = event.target.files[0];
+		const reader = new FileReader();
+		reader.onload = function() {
+			const imageBlock = document.getElementById("imagePreview");
+			const inputBlock = document.querySelector(".addPhotoArea div");
+			imageBlock.src = reader.result;
+			imageBlock.style.display = "block";
+			inputBlock.style.display = "none";
+		};
+		reader.readAsDataURL(file);
+	});
+}
+
+export function generateOptions(categories) {
+	const select = document.querySelector(".modal2 select");
+	categories.forEach(category => {
+		const option = document.createElement("option");
+		option.value = category.id;
+		option.innerText = category.name;
+		select.appendChild(option);
+	});
+}
+
+// Gestion de la réponse de l'API après ajout photo
+function processAddPhotoResponseCode(response){
+	switch(response.status) {
+	case 201:
+		// Affichage de la confirmation d'ajout dans la console '
+		alert("Ajout du projet réussie");
+		break;
+	case 400:
+		alert("Fichier ou syntaxe invalide");
+		// Informer l'utilisateur que les données envoyées sont invalides
+		break;
+	case 401:
+		alert("Utilisateur non autorisé");
+		// Afficher un message d'erreur à l'utilisateur
+		break;
+	case 500:
+		alert("Erreur du serveur, réessayez plus tard");
+		// Informer l'utilisateur qu'il y a eu une erreur serveur
+		break;
+	default:
+		// Autres erreurs
+		console.error("Erreur inattendue");
+		// Informer l'utilisateur d'une erreur inconnue
+	};
+};
+
+// Récupération et envoie des données des inputs puis gestion de la réponse API après validation ajout photo
+export function setEventAddPhoto() {
+	document.getElementById("submitButton").addEventListener("click", async(event) => {
+		event.preventDefault();
+		const imageData = new FormData();
+
+		const image = document.querySelector(".inputFile").files[0];
+		const title = document.getElementById("title").value;
+		const category = document.getElementById("category").value;
+
+		imageData.append("image", image);
+		imageData.append("title", title);
+		imageData.append("category", parseInt(category));
+
+		const responseApi = await postPhoto(imageData);
+		processAddPhotoResponseCode(responseApi);
 	});
 }
