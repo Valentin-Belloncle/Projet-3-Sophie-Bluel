@@ -1,4 +1,4 @@
-import { postLogin, deleteProjectApi } from "./service.js";
+import { postLogin, deleteProjectApi, postPhoto } from "./service.js";
 
 // Ajout de la galerie de projet dans HTML 
 export function generateProjects(projects){
@@ -222,5 +222,91 @@ export function deleteProject() {
 			// Gestion réponse API
 			processDeleteResponseCode(responseApi);
 		});
+	});
+}
+
+export function setControlButton() {
+	const requiredFields = document.querySelectorAll("[required]");
+	const submitButton = document.getElementById("submitButton");
+	requiredFields.forEach((field) => {
+		field.addEventListener("input", () => {
+			let isValid = true;	
+			requiredFields.forEach((f) => {
+				if (!f.value) {
+					isValid = false;
+				}
+			});
+			submitButton.disabled = !isValid ;
+		});
+	});
+}
+
+export function setPreviewImage() {
+	document.querySelector(".inputFile").addEventListener("input", (event) => {
+		const file = event.target.files[0];
+		const reader = new FileReader();
+		reader.onload = function() {
+			const imageBlock = document.getElementById("imagePreview");
+			const inputBlock = document.querySelector(".addPhotoArea div");
+			imageBlock.src = reader.result;
+			imageBlock.style.display = "block";
+			inputBlock.style.display = "none";
+		};
+		reader.readAsDataURL(file);
+	});
+}
+
+export function generateOptions(categories) {
+	const select = document.querySelector(".modal2 select");
+	categories.forEach(category => {
+		const option = document.createElement("option");
+		option.value = category.id;
+		option.innerText = category.name;
+		select.appendChild(option);
+	});
+}
+
+// Gestion de la réponse de l'API après ajout photo
+function processAddPhotoResponseCode(response){
+	switch(response.status) {
+	case 201:
+		// Affichage de la confirmation d'ajout dans la console '
+		alert("Ajout du projet réussie");
+		break;
+	case 400:
+		alert("Fichier ou syntaxe invalide");
+		// Informer l'utilisateur que les données envoyées sont invalides
+		break;
+	case 401:
+		alert("Utilisateur non autorisé");
+		// Afficher un message d'erreur à l'utilisateur
+		break;
+	case 500:
+		alert("Erreur du serveur, réessayez plus tard");
+		// Informer l'utilisateur qu'il y a eu une erreur serveur
+		break;
+	default:
+		// Autres erreurs
+		console.error("Erreur inattendue");
+		// Informer l'utilisateur d'une erreur inconnue
+	};
+};
+
+// Récupération et envoie des données des inputs puis gestion de la réponse API après validation ajout photo
+export function setEventAddPhoto() {
+	document.getElementById("submitButton").addEventListener("click", async(event) => {
+		event.preventDefault();
+		const imageData = new FormData();
+
+		const image = document.querySelector(".inputFile").files[0];
+		const title = document.getElementById("title").value;
+		const category = document.getElementById("category").value;
+
+		imageData.append("image", image);
+		imageData.append("title", title);
+		imageData.append("category", parseInt(category));
+
+		const responseApi = await postPhoto(imageData);
+		processAddPhotoResponseCode(responseApi);
 	});
 }

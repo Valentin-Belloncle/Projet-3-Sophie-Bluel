@@ -44,3 +44,17 @@ export async function deleteProjectApi(idProject) {
 	});
 	return response;
 }
+// Envoie de la photo ajoutée au back et réception réponse API
+export async function postPhoto(imageData) {
+
+	console.log(imageData);
+
+	const  response = await fetch("http://localhost:5678/api/works", {
+		method: "POST",
+		headers: { 
+			"Authorization": "Bearer " + getToken()
+		},
+		body: imageData
+	});
+	return response;
+}

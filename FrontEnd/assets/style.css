@@ -414,7 +414,7 @@ footer nav ul {
 	width: 237px;
 }
 
-.addPhotoArea {
+.addPhotoArea, .addPhotoArea div {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -457,6 +457,14 @@ footer nav ul {
 .addPhotoArea .infoAddPhoto {
 	font-size: 10px;
 	color: #444444;
+}
+
+.modal2 img {
+	display: none;
+	max-width:230px;
+	max-height:169px;
+	width: auto;
+	height: auto;
 }
 
 .modal2 form {
