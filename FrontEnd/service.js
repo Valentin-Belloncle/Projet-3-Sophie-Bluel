@@ -44,6 +44,7 @@ export async function deleteProjectApi(idProject) {
 	});
 	return response;
 }
+
 // Envoie de la photo ajoutée au back et réception réponse API
 export async function postPhoto(imageData) {
 
