@@ -5,44 +5,42 @@ export function generateProjects(projects){
 	// Récupération de l'élément du DOM qui accueillera les fiches
 	const sectionCards = document.querySelector(".gallery");
 
-	for (let i = 0; i < projects.length; i++) {
-		const article = projects[i];
+	projects.forEach(project => {
 		// Création d’une balise dédiée à un projet
 		const pieceElement = document.createElement("figure");
 		// Création des balises 
 		const imageElement = document.createElement("img");
-		imageElement.src = article.imageUrl;
-		imageElement.alt = article.title;
+		imageElement.src = project.imageUrl;
+		imageElement.alt = project.title;
 		const nomElement = document.createElement("figcaption");
-		nomElement.innerText = article.title;        
+		nomElement.innerText = project.title;        
 		// On rattache la balise article a la section Fiches
 		sectionCards.appendChild(pieceElement);
 		pieceElement.appendChild(imageElement);
 		pieceElement.appendChild(nomElement);
-	}
+	});
 }
 
 export function generateFilters(categories){
 	// Récupération de l'élément du DOM qui accueillera les filtres
 	const sectionCards = document.querySelector(".categories");
 
-	for (let i = 0; i < categories.length; i++) {
-		const article = categories[i];
+	categories.forEach(category => {
 		// Création des balises 
 		const buttonElement = document.createElement("button");
-		buttonElement.id = article.id;
-		buttonElement.innerText = article.name;
+		buttonElement.id = category.id;
+		buttonElement.innerText = category.name;
 		// On rattache la balise article a la section Fiches
 		sectionCards.appendChild(buttonElement);
-	}
+	});
 }
 
 // Filtrage des projets
 export function filterProjects(projects){
 	const filterButtons = document.querySelectorAll(".categories button");
 
-	for (let i = 0; i < filterButtons.length; i++) {
-		filterButtons[i].addEventListener("click", function (event) {
+	filterButtons.forEach(filterButton => {
+		filterButton.addEventListener("click", function (event) {
 			const id = event.target.id;
 			const projectsFilters = projects.filter(function (project) {
 				return project.category.id == id;
@@ -56,9 +54,8 @@ export function filterProjects(projects){
 				generateProjects(projectsFilters);
 			}
 		});
-	};
-};
-
+	});
+}
 
 //_______________________ LOGIN __________________________//
 
@@ -134,15 +131,14 @@ export function generateModalProjects(projects){
 	// Récupération de l'élément du DOM qui accueillera les fiches
 	const sectionCards = document.querySelector(".modal .gallery");
 
-	for (let i = 0; i < projects.length; i++) {
-		const article = projects[i];
+	projects.forEach(project => {
 		// Création d’une balise dédiée à un projet
 		const pieceElement = document.createElement("figure");
 		// Création des balises 
 		const imageElement = document.createElement("img");
-		imageElement.src = article.imageUrl;
-		imageElement.alt = article.title;
-		imageElement.id = article.id;
+		imageElement.src = project.imageUrl;
+		imageElement.alt = project.title;
+		imageElement.id = project.id;
 		// Création des div ayant pour rôle de "bouton" de suppression
 		const divElement = document.createElement("div");
 		divElement.className = "iconDiv";
@@ -153,10 +149,10 @@ export function generateModalProjects(projects){
 		pieceElement.appendChild(imageElement);
 		pieceElement.appendChild(divElement);
 		divElement.appendChild(iconeElement);
-	}
+	});
 }
 
-// Ouverture/fermeture de la modale
+// Gestion de l'ouverture et fermeture de la modale
 export function processModal() {
 	const overlay = document.querySelector(".overlay");
 	const modal = document.querySelector(".modal");
@@ -168,6 +164,10 @@ export function processModal() {
 		overlay.style.display = "block";
 		modal.style.display = "flex";
 		// Fermeture modale
+		overlay.addEventListener("click", () => {
+			modal.style.display = "none";
+			overlay.style.display = "none";
+		});
 		document.querySelector("#closeModal").addEventListener("click", () => {
 			modal.style.display = "none";
 			overlay.style.display = "none";
@@ -217,7 +217,8 @@ export function deleteProject() {
 	figureGallery.forEach((figure) => {
 		const idProject = figure.querySelector("img").id;
 		const binButton = figure.querySelector(".iconDiv");
-		binButton.addEventListener("click", async function() {
+		binButton.addEventListener("click", async (event) => {
+			event.preventDefault();
 			const responseApi = await deleteProjectApi(idProject);
 			// Gestion réponse API
 			processDeleteResponseCode(responseApi);
@@ -225,9 +226,11 @@ export function deleteProject() {
 	});
 }
 
+// Gestion de l'activation/désactivation du bouton de validation d'envoi d'un nouveau projet
 export function setControlButton() {
 	const requiredFields = document.querySelectorAll("[required]");
 	const submitButton = document.getElementById("submitButton");
+	// La complétion de chaque input est vérifiée
 	requiredFields.forEach((field) => {
 		field.addEventListener("input", () => {
 			let isValid = true;	
@@ -236,11 +239,13 @@ export function setControlButton() {
 					isValid = false;
 				}
 			});
+			// Le bouton est activé ou désactivé en conséquence
 			submitButton.disabled = !isValid ;
 		});
 	});
 }
 
+// Gestion de l'aperçu d'image après son ajour dans l'input "file"
 export function setPreviewImage() {
 	document.querySelector(".inputFile").addEventListener("input", (event) => {
 		const file = event.target.files[0];
@@ -256,6 +261,7 @@ export function setPreviewImage() {
 	});
 }
 
+// Génération d'option sélectionnable depuis les catégories reçues de l'API
 export function generateOptions(categories) {
 	const select = document.querySelector(".modal2 select");
 	categories.forEach(category => {
@@ -271,7 +277,7 @@ function processAddPhotoResponseCode(response){
 	switch(response.status) {
 	case 201:
 		// Affichage de la confirmation d'ajout dans la console '
-		alert("Ajout du projet réussie");
+		console.log("Ajout du projet réussie");
 		break;
 	case 400:
 		alert("Fichier ou syntaxe invalide");
