@@ -1,4 +1,4 @@
-import { postLogin, deleteProjectApi, postPhoto } from "./service.js";
+import { getProjects, postLogin, deleteProjectApi, postPhoto } from "./service.js";
 
 // Ajout de la galerie de projet dans HTML 
 export function generateProjects(projects){
@@ -13,7 +13,7 @@ export function generateProjects(projects){
 		imageElement.src = project.imageUrl;
 		imageElement.alt = project.title;
 		const nomElement = document.createElement("figcaption");
-		nomElement.innerText = project.title;        
+		nomElement.innerText = project.title;
 		// On rattache la balise article a la section Fiches
 		sectionCards.appendChild(pieceElement);
 		pieceElement.appendChild(imageElement);
@@ -187,12 +187,25 @@ export function processModal() {
 	});
 }
 
+// Rechargement de la galerie de projets
+async function majGallery(){
+	const projectsApi = await getProjects();
+	document.querySelector(".gallery").innerHTML = "";
+	document.querySelector(".modal .gallery").innerHTML = "";
+	generateProjects(projectsApi);
+	generateModalProjects(projectsApi);
+	// Rajout des observables sur la nouvelle galerie
+	deleteProject();
+}
+
 // Gestion de la réponse de l'API après délétion
 function processDeleteResponseCode(response){
 	switch(response.status) {
 	case 204:
 		// Affichage de la confirmation de supression dans la console 
 		alert("Supression du projet réussie");
+		// Rechargement de la galerie pour rendre visuel la supression du projet
+		majGallery();
 		break;
 	case 401:
 		alert("Utilisateur non autorisé");
@@ -277,7 +290,8 @@ function processAddPhotoResponseCode(response){
 	switch(response.status) {
 	case 201:
 		// Affichage de la confirmation d'ajout dans la console '
-		console.log("Ajout du projet réussie");
+		alert("Ajout du projet réussie");
+		majGallery();
 		break;
 	case 400:
 		alert("Fichier ou syntaxe invalide");
